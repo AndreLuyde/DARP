@@ -24,23 +24,15 @@ int getIndiceMenorDistancia(vector<double> distancias, vector<Node> &nodes);
 int getIndexNextWindow(vector<Node> &nodes, double timeWindow);
 void metodoGulosoMelhorado(Graph &g);
 void showResult(vector<Node> car);
-bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position,
-		double timeCar, double timeMaxDuration, double &timeTotal);
-bool verificaViolacaoTW(vector<Node> car, double timeMaxDuration,
-		double timeMaxCar, double &timeTotal);
+bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position, double timeCar, double timeMaxDuration, double &timeTotal);
+bool verificaViolacaoTW(vector<Node> car, double timeMaxDuration, double timeMaxCar, double &timeTotal);
 void metodoGulosoSimples(Graph &g);
 bool verificaNumPersons(vector<Node> car, int maxNumPeople);
-bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeInicialCar,
-		double &timeTotal);
+bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeInicialCar, double &timeTotal);
 int getIndexSmallTW(vector<Node> &nodes);
 double getSizeTWCar(vector<Node> car);
-bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeMaxDuration,
-		double &timeTotal);
-bool verificaInsercaoGulosa(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeMaxDuration,
-		double &timeTotal);
+bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal);
+bool verificaInsercaoGulosa(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal);
 int main() {
 
 	Graph G;
@@ -134,13 +126,8 @@ void metodoGulosoMelhorado(Graph &g) {
 			} else {
 				if (nodos[dist].numPersons > 0) {
 					if (!nodos[dist].atendida) { //verifica se ainda não foi atendido
-						//se o tempo total da viagem for menor que o inicio da janela, o cara espera
-						//						if (timeTotalRide < nodos[dist].twA) {
-						//							timeTotalRide += nodos[dist].twA - timeTotalRide;
-						//						}
 						vector<Node> car2 = carro;
-						if (verificaInsercao(car2, nodos, dist, timeMaxRide,
-								timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
+						if (verificaInsercao(car2, nodos, dist, timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
 							if (numPersons >= maxPeopleCar) {
 								if (verificaNumPersons(car2, maxPeopleCar)) {
 									numPersons += nodos[dist].numPersons;
@@ -153,8 +140,7 @@ void metodoGulosoMelhorado(Graph &g) {
 									carro = car2;
 								} else {
 									nodos[dist].atendida = false;
-									nodos[dist + numRequisicoes].atendida =
-											false;
+									nodos[dist + numRequisicoes].atendida = false;
 								}
 							} else {
 								numPersons += nodos[dist].numPersons; //falta ajustar
@@ -174,12 +160,10 @@ void metodoGulosoMelhorado(Graph &g) {
 				} else {
 					if (!nodos[dist].atendida) { //verifica se ainda não foi atendido
 						vector<Node> car2 = carro;
-						if (verificaInsercaoVolta2(car2, nodos, dist,
-								timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
+						if (verificaInsercaoVolta2(car2, nodos, dist, timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
 							if (numPersons >= maxPeopleCar) {
 								if (verificaNumPersons(car2, maxPeopleCar)) {
-									numPersons +=
-											nodos[dist - numRequisicoes].numPersons;
+									numPersons += nodos[dist - numRequisicoes].numPersons;
 									//colocar distancia negativa para não ser selecionada mais
 									for (int j = 0; j < nodos.size(); j++) {
 										nodos[j].listDist[dist] = -1;
@@ -189,12 +173,10 @@ void metodoGulosoMelhorado(Graph &g) {
 									carro = car2;
 								} else {
 									nodos[dist].atendida = false;
-									nodos[dist - numRequisicoes].atendida =
-											false;
+									nodos[dist - numRequisicoes].atendida = false;
 								}
 							} else {
-								numPersons +=
-										nodos[dist - numRequisicoes].numPersons; //falta ajustar
+								numPersons += nodos[dist - numRequisicoes].numPersons; //falta ajustar
 								//colocar distancia negativa para não ser selecionada mais
 								for (int j = 0; j < nodos.size(); j++) {
 									nodos[j].listDist[dist] = -1;
@@ -255,8 +237,7 @@ void metodoGulosoSimples(Graph &g) {
 					if (!nodos[dist].atendida) { //verifica se ainda não foi atendido
 						//se o tempo total da viagem for menor que o inicio da janela, o cara espera
 						vector<Node> car2 = carro;
-						if (verificaInsercaoGulosa(car2, nodos, dist,
-								timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
+						if (verificaInsercaoGulosa(car2, nodos, dist, timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
 							if (numPersons >= maxPeopleCar) {
 								if (verificaNumPersons(car2, maxPeopleCar)) {
 									numPersons += nodos[dist].numPersons;
@@ -269,8 +250,7 @@ void metodoGulosoSimples(Graph &g) {
 									carro = car2;
 								} else {
 									nodos[dist].atendida = false;
-									nodos[dist + numRequisicoes].atendida =
-											false;
+									nodos[dist + numRequisicoes].atendida = false;
 								}
 							} else {
 								numPersons += nodos[dist].numPersons; //falta ajustar
@@ -294,8 +274,7 @@ void metodoGulosoSimples(Graph &g) {
 								timeMaxRide, timeMaxDuration, timeTotalRide)) { //insere e verifica viabilidade	//Adicionar verificar tempo carro
 							if (numPersons >= maxPeopleCar) {
 								if (verificaNumPersons(car2, maxPeopleCar)) {
-									numPersons +=
-											nodos[dist - numRequisicoes].numPersons;
+									numPersons += nodos[dist - numRequisicoes].numPersons;
 									//colocar distancia negativa para não ser selecionada mais
 									for (int j = 0; j < nodos.size(); j++) {
 										nodos[j].listDist[dist] = -1;
@@ -305,12 +284,10 @@ void metodoGulosoSimples(Graph &g) {
 									carro = car2;
 								} else {
 									nodos[dist].atendida = false;
-									nodos[dist - numRequisicoes].atendida =
-											false;
+									nodos[dist - numRequisicoes].atendida = false;
 								}
 							} else {
-								numPersons +=
-										nodos[dist - numRequisicoes].numPersons; //falta ajustar
+								numPersons += nodos[dist - numRequisicoes].numPersons; //falta ajustar
 								//colocar distancia negativa para não ser selecionada mais
 								for (int j = 0; j < nodos.size(); j++) {
 									nodos[j].listDist[dist] = -1;
@@ -352,9 +329,7 @@ double getSizeTWCar(vector<Node> car) {
 	return timeCar;
 }
 
-bool verificaInsercaoGulosa(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeMaxDuration,
-		double &timeTotal) {
+bool verificaInsercaoGulosa(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal) {
 	double timeCar = 0;
 	int positionInsert = nodos.size() / 2;
 	bool insert = false;
@@ -388,9 +363,7 @@ bool verificaInsercaoGulosa(vector<Node> &car, vector<Node> &nodos,
 	}
 }
 
-bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeMaxDuration,
-		double &timeTotal) {
+bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal) {
 	double timeCar = 0;
 	int positionInsert = nodos.size() / 2;
 	bool insert = false;
@@ -402,8 +375,7 @@ bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos,
 			timeCar += car[i].listDist[i + 1];
 		}
 	}
-	timeCar +=
-			car[car.size() - 1].listDist[nodos[position - positionInsert].node];
+	timeCar += car[car.size() - 1].listDist[nodos[position - positionInsert].node];
 	if (nodos[position].twB >= timeCar || nodos[position].twA >= timeCar) {
 		car.push_back(nodos[position - positionInsert]);
 		timeCar += car[car.size() - 1].listDist[nodos[position].node];
@@ -425,8 +397,7 @@ bool verificaInsercaoVoltaGulosa(vector<Node> &car, vector<Node> &nodos,
 }
 
 //faz a inserção da requisição e verifica se ela não viola as restrições
-bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position,
-		double timeMaxCar, double timeMaxDuration, double &timeTotal) {
+bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal) {
 	vector<Node>::iterator it;
 	int contRequest = 0;
 	//timeTotal é o tempo de percurso
@@ -440,8 +411,6 @@ bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position,
 			if (contRequest < 3) {
 				if (it->twA != 0) {
 					if (nodos[position].twA >= it->twA) {
-						//						&& (nodos[position].twA <= timeTotal
-						//								&& nodos[position].twB >= timeTotal)) {
 						car.insert(it + 1, nodos[position]);
 						break;
 					}
@@ -450,21 +419,6 @@ bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position,
 		}
 		contRequest += it->numPersons;
 	}
-	//insere a requisição de volta da requisição no carro
-//	for (it = car.end() - 1; it >= car.begin(); it--) {
-//		if (nodos[positionInsert + position].twA > it->twA) {
-//			car.insert(it + 1, nodos[positionInsert + position]);
-//			break;
-//		} else if (nodos[positionInsert + position].twA == it->twA) {
-//			if (nodos[positionInsert + position].twB > it->twB) {
-//				car.insert(it + 1, nodos[positionInsert + position]);
-//				break;
-//			} else {
-//				car.insert(it, nodos[positionInsert + position]);
-//				break;
-//			}
-//		}
-//	}
 	car.push_back(nodos[positionInsert + position]);
 
 	//faz a verificação se está ok depois da inserção
@@ -477,9 +431,7 @@ bool verificaInsercao(vector<Node> &car, vector<Node> &nodos, int position,
 	}
 }
 
-bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos,
-		int position, double timeMaxCar, double timeMaxDuration,
-		double &timeTotal) {
+bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeMaxDuration, double &timeTotal) {
 	vector<Node>::iterator it;
 	int contRequest = 0;
 	//timeTotal é o tempo de percurso
@@ -492,8 +444,6 @@ bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos,
 		} else {
 			if (contRequest < 3) {
 				if (nodos[position - positionInsert].twA >= it->twA) {
-					//						&& (nodos[position].twA <= timeTotal
-					//								&& nodos[position].twB >= timeTotal)) {
 					car.insert(it + 1, nodos[position - positionInsert]);
 					break;
 				}
@@ -501,21 +451,6 @@ bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos,
 		}
 		contRequest += it->numPersons;
 	}
-	//insere a requisição de volta da requisição no carro
-	//	for (it = car.end() - 1; it >= car.begin(); it--) {
-	//		if (nodos[positionInsert + position].twA > it->twA) {
-	//			car.insert(it + 1, nodos[positionInsert + position]);
-	//			break;
-	//		} else if (nodos[positionInsert + position].twA == it->twA) {
-	//			if (nodos[positionInsert + position].twB > it->twB) {
-	//				car.insert(it + 1, nodos[positionInsert + position]);
-	//				break;
-	//			} else {
-	//				car.insert(it, nodos[positionInsert + position]);
-	//				break;
-	//			}
-	//		}
-	//	}
 	car.push_back(nodos[position]);
 
 	//faz a verificação se está ok depois da inserção
@@ -528,8 +463,7 @@ bool verificaInsercaoVolta2(vector<Node> &car, vector<Node> &nodos,
 	}
 }
 
-bool verificaInsercaoVolta(vector<Node> &car, vector<Node> &nodos, int position,
-		double timeMaxCar, double timeInicialCar, double &timeTotal) {
+bool verificaInsercaoVolta(vector<Node> &car, vector<Node> &nodos, int position, double timeMaxCar, double timeInicialCar, double &timeTotal) {
 	vector<Node>::iterator it;
 	int contPeople = 0;
 	bool insert = false;
@@ -539,29 +473,14 @@ bool verificaInsercaoVolta(vector<Node> &car, vector<Node> &nodos, int position,
 	for (it = car.begin(); it < car.end(); it++) {
 		timeCar += it->listDist[(it + 1)->node];
 		if (contPeople < 2) {
-			if (nodos[position].twA <= it->twA
-					|| (it->numPersons < 0 && it->twA == 0)) {
+			if (nodos[position].twA <= it->twA || (it->numPersons < 0 && it->twA == 0)) {
 				car.insert(it + 1, nodos[position]);
 				insert = true;
 				positionCar++;
 				break;
-			} //else if (nodos[position].twA == it->twA) {
-//				if (nodos[position].twB > it->twB) {
-//					car.insert(it + 1, nodos[position]);
-//					insert = true;
-//					positionCar++;
-//					break;
-//				} else {
-//					car.insert(it, nodos[position]);
-//					insert = true;
-//					positionCar++;
-//					break;
-//				}
-//			}
+			}
 		} else {
-			if (nodos[position].twB <= timeCar
-					|| (it->numPersons < 0 && it->twA == 0)
-					|| nodos[position].twA <= it->twA) {
+			if (nodos[position].twB <= timeCar || (it->numPersons < 0 && it->twA == 0) || nodos[position].twA <= it->twA) {
 				car.insert(it, nodos[position]);
 				insert = true;
 				positionCar++;
@@ -579,7 +498,6 @@ bool verificaInsercaoVolta(vector<Node> &car, vector<Node> &nodos, int position,
 		for (it = car.begin(); it < car.begin() + positionCar; it++) {
 			if (contPeople < 3) {
 				if (nodos[position - positionInsert].twA >= it->twA) {
-					//				&& (nodos[position - positionInsert].twA <= timeTotal && nodos[position - positionInsert].twB >= timeTotal)) {
 					car.insert(it + 1, nodos[position - positionInsert]);
 					break;
 				}
@@ -601,8 +519,7 @@ bool verificaInsercaoVolta(vector<Node> &car, vector<Node> &nodos, int position,
 }
 
 //verifica se não há violação na janela de tempo e o tempo máximo do carro
-bool verificaViolacaoTW(vector<Node> car, double timeMaxDuration,
-		double timeMaxCar, double &timeTotal) {
+bool verificaViolacaoTW(vector<Node> car, double timeMaxDuration, double timeMaxCar, double &timeTotal) {
 	double timeCar = 0;
 	bool violacao = false;
 	//verifica se não viola nenhuma janela de tempo depois da inserção
@@ -643,15 +560,10 @@ bool verificaNumPersons(vector<Node> car, int maxNumPeople) {
 
 //Mostra o conteudo do carro	//precisa ser melhorada
 void showResult(vector<Node> car) {
-	cout << "================================================================"
-			<< endl;
+	cout << "================================================================"<< endl;
 	cout << "Carro" << endl;
 	double timeCar = 0;
 	car.push_back(car[0]);
-//	timeCar = car[0].listDist[car[1].node];
-//	if (timeCar < car[1].twA) {
-//		timeCar = car[1].twA;
-//	}
 	for (int i = 0; i < car.size() - 1; i++) {
 		timeCar += car[i].listDist[car[i + 1].node];
 		if (timeCar < car[i].twA) {
@@ -679,8 +591,7 @@ void calcuaDistancias(Graph &g) {
 	for (int i = 0; i < g.getNodos().size(); i++) {
 		for (int j = 0; j < g.getNodos().size(); j++) {
 			if (i != j) {
-				nodos[i].listDist.push_back(
-						distanciaEntrePontos(nodos[i], nodos[j]));
+				nodos[i].listDist.push_back(distanciaEntrePontos(nodos[i], nodos[j]));
 			} else {
 				nodos[i].listDist.push_back(0);
 			}
@@ -691,9 +602,7 @@ void calcuaDistancias(Graph &g) {
 
 //Calcula distancia entre dois pontos
 double distanciaEntrePontos(Node node1, Node node2) {
-	double distance = sqrt(
-			pow((node2.coordX - node2.coordX), 2)
-					+ pow((node2.coordY - node1.coordY), 2));
+	double distance = sqrt(pow((node2.coordX - node2.coordX), 2) + pow((node2.coordY - node1.coordY), 2));
 	return distance;
 }
 
@@ -722,12 +631,10 @@ int getIndexNextWindow(vector<Node> &nodes, double timeWindow) {
 	int smallIndex = -1;
 	for (int i = 1; i < nodes.size() / 2; i++) {
 		diference = timeWindow - nodes[i].twA;
-		if (smallTw == -1.2233 && !nodes[i].verificado
-				&& nodes[i].twA <= timeWindow) {
+		if (smallTw == -1.2233 && !nodes[i].verificado && nodes[i].twA <= timeWindow) {
 			smallTw = diference;
 			smallIndex = i;
-		} else if (diference < smallTw && diference > 0 && !nodes[i].verificado
-				&& nodes[i].twA >= timeWindow) {
+		} else if (diference < smallTw && diference > 0 && !nodes[i].verificado && nodes[i].twA >= timeWindow) {
 			smallTw = diference;
 			smallIndex = i;
 		}
@@ -743,12 +650,10 @@ int getIndexNextWindow2(vector<Node> &nodes, double timeWindow) {
 	int smallIndex = -1;
 	for (int i = 1; i < nodes.size() / 2; i++) {
 		diference = timeWindow - nodes[i].twA;
-		if (smallTw == -1 && !nodes[i].verificado
-				&& nodes[i].twA <= timeWindow) {
+		if (smallTw == -1 && !nodes[i].verificado && nodes[i].twA <= timeWindow) {
 			smallTw = diference;
 			smallIndex = i;
-		} else if (diference < smallTw && diference > 0 && !nodes[i].verificado
-				&& nodes[i].twA >= timeWindow) {
+		} else if (diference < smallTw && diference > 0 && !nodes[i].verificado && nodes[i].twA >= timeWindow) {
 			smallTw = diference;
 			smallIndex = i;
 		}
@@ -765,8 +670,7 @@ int getIndexSmallTW(vector<Node> &nodes) {
 		if (smallTw == -1 && nodes[i].twA > 0 && !nodes[i].verificado) {
 			smallTw = nodes[i].twA;
 			smallIndex = i;
-		} else if (nodes[i].twA < smallTw && nodes[i].twA > 0
-				&& !nodes[i].verificado) {
+		} else if (nodes[i].twA < smallTw && nodes[i].twA > 0 && !nodes[i].verificado) {
 			smallTw = nodes[i].twA;
 			smallIndex = i;
 		}

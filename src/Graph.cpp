@@ -28,9 +28,7 @@ void Graph::addNode(Node node) {
 
 //verifica Vizinho
 bool Graph::isNeighboor(int node1, int node2) {
-	if (find(nodos[node1].listAdj[node1].begin(),
-			nodos[node1].listAdj[node1].end(), node2)
-			!= nodos[node1].listAdj[node1].end())
+	if (find(nodos[node1].listAdj[node1].begin(), nodos[node1].listAdj[node1].end(), node2)	!= nodos[node1].listAdj[node1].end())
 		return true;
 	return false;
 }

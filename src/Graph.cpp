@@ -9,7 +9,6 @@
 
 Graph::Graph() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Graph::~Graph() {

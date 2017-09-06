@@ -11,21 +11,10 @@
 #include <list>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
-struct Node {
-	int node;
-	double coordX;
-	double coordY;
-	double timeService;
-	int numPersons;
-	double twA;
-	double twB;
-	bool atendida = false;
-	bool verificado = false;
-	vector<double> listDist;
-	vector<int> *listAdj;
-};
+#include "Node.h"
+
+using namespace std;
 
 class Graph {
 

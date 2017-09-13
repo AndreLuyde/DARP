@@ -1,13 +1,13 @@
 /*
- * Solution.cpp
+ * Car.cpp
  *
  *  Created on: 5 de set de 2017
  *      Author: andre
  */
 
-#include "Solution.h"
+#include "Car.h"
 
-Solution::Solution() {
+Car::Car() {
 
 }
 

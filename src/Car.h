@@ -1,27 +1,19 @@
 /*
- * Solution.h
+ * Car.h
  *
  *  Created on: 5 de set de 2017
  *      Author: andre
  */
 
-#ifndef SOLUTION_H_
-#define SOLUTION_H_
+#ifndef CAR_H_
+#define CAR_H_
 
 #include "Node.h"
 using namespace std;
 
-class Solution{
+class Car{
 public:
-	Solution();
-
-	const vector<Node>& getCar() const {
-		return car;
-	}
-
-	void setCar(const vector<Node>& car) {
-		this->car = car;
-	}
+	Car();
 
 	double getDistance() const {
 		return distance;
@@ -31,11 +23,17 @@ public:
 		this->distance = distance;
 	}
 
+	const vector<Node>& getRoute() const {
+		return route;
+	}
+
+	void setRoute(const vector<Node>& route) {
+		this->route = route;
+	}
+
 private:
 	double distance;
-	vector<Node> car;
+	vector<Node> route;
 };
 
-
-
-#endif /* SOLUTION_H_ */
+#endif /* CAR_H_ */

@@ -89,7 +89,7 @@ int main() {
 		cout << "Solução Inválida!" << endl;
 	}
 	//método guloso
-//	guloso.run(G);
+	guloso.run(G);
 //	metodoGulosoSimples(G);
 
 //	cout << "Hello world!" << endl;

@@ -81,8 +81,8 @@ private:
 	int numRequisicoes;
 	int qtdCarros;
 	int capacidade;
-	double maxRideTime;
-	int maxDuration;
+	double maxRideTime; //tempo máximo de permanencia do cliente no carro
+	int maxDuration; //tempo máximo de rota
 
 };
 
